@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guessing Game</title>
+    <style>
+        body {
+            background-color: darkcyan;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        #gameContainer {
+            background-color: skyblue;
+            padding: 20px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 0 10px skyblue;
+            width: 350px; /* Decreased width */
+            margin-top: 20px;
+        }
+        #word {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        input {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'AR ESSENCE', sans-serif;
+            color: white;
+            background-color: darkcyan;
+            border: none; /* No border */
+        }
+        #attempts {
+            margin-top: 10px;
+            color: white;
+            font-size: 22px;
+            font-family: AR ESSENCE;
+        }
+        h1 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 20px;
+            font-family: AR ESSENCE;
+        }
+        #guessedLetters {
+            margin-top: 20px;
+            color: white;
+            font-size: 22px;
+            font-family: AR ESSENCE;
+        }
+        p {
+            color: white;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: AR ESSENCE;
+        }
+        #resetButton {
+            font-size: 22px;
+            display: none; /* Initially hidden */
+            padding: 10px 15px; /* Adjusted padding */
+            transition: padding 0.3s; /* Smooth transition */
+        }
+        #resetButton:hover {
+            padding: 10px 10px; /* Padding when hovered */
+        }
+        #backButton {
+            margin-top: 20px; /* Space between game box and button */
+            color: white; /* Button text color */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 30px; /* Button font size */
+            border: none; /* No border */
+            background-color: transparent; /* Transparent background */
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <p>Try to Guess the given word!<br>Remember you only have 6 chances!!</p>
+    <div id="gameContainer" role="application">
+        <h1>Word Guessing Game</h1>
+        <div id="word" aria-live="polite"></div>
+        <input type="text" id="guessInput" placeholder="Enter your guess" maxlength="1" aria-label="Guess a letter">
+        <button onclick="submitGuess()">Guess</button>
+        <div id="attempts"></div>
+        <div id="guessedLetters"></div>
+    </div>
+
+    <button id="resetButton" onclick="resetGame()">Play Again</button> <!-- Moved outside the game box -->
+    <button id="backButton" onclick="goBack()">Click me to go back!</button>
+
+    <script>
+        const words = [
+            "javascript", "python", "html", "css", "react", 
+            "angular", "vue", "ruby", "java", "swift", 
+            "kotlin", "golang", "rust", "typescript", "node", 
+            "express", "django", "flask", "sql", "mongodb", 
+            "bootstrap", "sass", "tailwind", "graphql", "firebase", 
+            "docker", "cloud", "api", "algorithm", "data", 
+            "network", "security", "testing"
+        ];
+        let selectedWord, guessedWord, attempts, maxAttempts, guessedLetters;
+
+        function initGame() {
+            selectedWord = words[Math.floor(Math.random() * words.length)];
+            guessedWord = "_".repeat(selectedWord.length).split("");
+            attempts = 0;
+            maxAttempts = 6;
+            guessedLetters = [];
+
+            document.getElementById("word").innerText = guessedWord.join(" ");
+            document.getElementById("attempts").innerText = "Attempts remaining: " + (maxAttempts - attempts);
+            document.getElementById("guessedLetters").innerText = "Guessed Letters: ";
+            document.getElementById("guessInput").disabled = false;
+            document.getElementById("resetButton").style.display = 'none';
+        }
+
+        function submitGuess() {
+            const guessInput = document.getElementById("guessInput");
+            let guess = guessInput.value.toLowerCase();
+            guessInput.value = '';
+
+            if (!/^[a-z]$/.test(guess)) {
+                alert("Please enter a valid letter.");
+                return;
+            }
+
+            if (guessedLetters.includes(guess)) {
+                return; // No message for already guessed letters
+            }
+
+            guessedLetters.push(guess);
+            document.getElementById("guessedLetters").innerText = "Guessed Letters: " + guessedLetters.join(", ");
+
+            if (selectedWord.includes(guess)) {
+                for (let i = 0; i < selectedWord.length; i++) {
+                    if (selectedWord[i] === guess) {
+                        guessedWord[i] = guess;
+                    }
+                }
+            } else {
+                attempts++;
+            }
+
+            document.getElementById("word").innerText = guessedWord.join(" ");
+            document.getElementById("attempts").innerText = "Attempts remaining: " + (maxAttempts - attempts);
+
+            checkGameStatus();
+        }
+
+        function checkGameStatus() {
+            if (!guessedWord.includes("_")) {
+                document.getElementById("guessInput").disabled = true;
+                document.getElementById("resetButton").style.display = 'inline';
+            } else if (attempts >= maxAttempts) {
+                document.getElementById("guessInput").disabled = true;
+                document.getElementById("resetButton").style.display = 'inline';
+            }
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        // Function to go back to Games.html
+        function goBack() {
+            window.location.href = 'Games.html';
+        }
+
+        // Initialize the game when the page loads
+        initGame();
+    </script>
+</body>
+</html>

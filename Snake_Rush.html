@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Snake HTML Game</title>
+  <meta charset="UTF-8">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* Center vertically */
+      background: darkcyan;
+      overflow: hidden; /* Prevent scrolling */
+    }
+    p {
+      text-align: center;
+      font-size: 30px; /* Smaller size */
+      font-family: AR ESSENCE;
+      color: white;
+      margin-bottom: 10px; /* Reduced margin */
+    }
+    #game-container {
+      margin: 15px; /* Margin around the game container */
+      padding: 10px; /* Padding around the canvas */
+      border: 10px solid skyblue; /* skyblue border */
+      border-radius: 10px; /* Rounded corners */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    canvas {
+      border: 1px solid white;
+      width: 320px; /* Adjusted width */
+      height: 320px; /* Adjusted height */
+    }
+    #score {
+      color: white;
+      font-size: 20px;
+      font-family: AR ESSENCE;
+      margin-top: 10px;
+    }
+    #play-again {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 20px;
+      background-color: darkgray;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none; /* Hidden initially */
+    }
+    h1 {
+      color: white;
+      text-decoration: none;
+      font-family: Agency FB;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <p>Get the apple to increase in size but try not to eat yourself!</p>
+  <div id="game-container">
+    <canvas width="400" height="400" id="game"></canvas>
+    <div id="score">Score: 0</div>
+    <button id="play-again">Play Again</button>
+  </div>
+  <h1><a href="Games.html">Click me to go back!</a></h1>
+  <script>
+    var canvas = document.getElementById('game');
+    var context = canvas.getContext('2d');
+
+    var grid = 16;
+    var count = 0;
+    var score = 0;
+    var gamePaused = false; // Flag to track if the game is paused
+
+    var snake = {
+      x: 160,
+      y: 160,
+      dx: grid,
+      dy: 0,
+      cells: [],
+      maxCells: 4
+    };
+
+    var apple = {
+      x: 320,
+      y: 320
+    };
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function loop() {
+      if (gamePaused) return; // If the game is paused, skip the loop
+
+      requestAnimationFrame(loop);
+
+      if (++count < 6) {
+        return;
+      }
+
+      count = 0;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      snake.x += snake.dx;
+      snake.y += snake.dy;
+
+      // Wrap snake position horizontally
+      if (snake.x < 0) {
+        snake.x = canvas.width - grid;
+      } else if (snake.x >= canvas.width) {
+        snake.x = 0;
+      }
+
+      // Wrap snake position vertically
+      if (snake.y < 0) {
+        snake.y = canvas.height - grid;
+      } else if (snake.y >= canvas.height) {
+        snake.y = 0;
+      }
+
+      snake.cells.unshift({ x: snake.x, y: snake.y });
+
+      if (snake.cells.length > snake.maxCells) {
+        snake.cells.pop();
+      }
+
+      // Draw apple
+      context.fillStyle = 'red';
+      context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+
+      // Draw snake
+      context.fillStyle = 'green';
+      snake.cells.forEach(function(cell, index) {
+        context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+
+        // Snake ate apple
+        if (cell.x === apple.x && cell.y === apple.y) {
+          snake.maxCells++;
+          score++; // Increment score
+          document.getElementById('score').textContent = 'Score: ' + score; // Update score display
+          apple.x = getRandomInt(0, 20) * grid; // Adjust for smaller canvas
+          apple.y = getRandomInt(0, 20) * grid; // Adjust for smaller canvas
+        }
+
+        // Check collision with all cells after this one
+        for (var i = index + 1; i < snake.cells.length; i++) {
+          if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+            // Show play again option
+            document.getElementById('play-again').style.display = 'block';
+            gamePaused = true; // Pause the game
+            return; // Exit the loop
+          }
+        }
+      });
+    }
+
+    // Listen to keyboard events to move the snake
+    document.addEventListener('keydown', function(e) {
+      if (gamePaused) return; // Prevent movement if game is paused
+      if (e.which === 37 && snake.dx === 0) {
+        snake.dx = -grid;
+        snake.dy = 0;
+      } else if (e.which === 38 && snake.dy === 0) {
+        snake.dy = -grid;
+        snake.dx = 0;
+      } else if (e.which === 39 && snake.dx === 0) {
+        snake.dx = grid;
+        snake.dy = 0;
+      } else if (e.which === 40 && snake.dy === 0) {
+        snake.dy = grid;
+        snake.dx = 0;
+      }
+    });
+
+    // Play again button click event
+    document.getElementById('play-again').addEventListener('click', function() {
+      // Reset game variables
+      snake.x = 160;
+      snake.y = 160;
+      snake.cells = [];
+      snake.maxCells = 4;
+      snake.dx = grid;
+      snake.dy = 0;
+      score = 0; // Reset score
+      document.getElementById('score').textContent = 'Score: ' + score; // Update score display
+      document.getElementById('play-again').style.display = 'none'; // Hide play again button
+      gamePaused = false; // Resume game
+      requestAnimationFrame(loop); // Restart the game loop
+    });
+
+    // Start the game
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

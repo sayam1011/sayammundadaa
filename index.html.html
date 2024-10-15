@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <title>HTML Login Form</title>
+      <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background: darkcyan;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .main {
+            background-color: cadetblue;;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: transform 0.2s;
+            width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        h3 {
+            color: white;
+        }
+        label {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-align: left;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border: none;
+            color: darkcyan;
+            cursor: pointer;
+            background-color: white;
+            width: 100%;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+      </style>
+</head>
+
+<body>
+      <div class="main">
+            <h1>Study Without Stress</h1>
+            <h3>Enter your login credentials</h3>
+            <form action="Home.html" method="GET">
+                  <label for="first">Username:</label>
+                  <input type="text" id="first" name="first" placeholder="Enter your Username" required>
+
+                  <label for="password">Password:</label>
+                  <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+                  <label for="dob">Date of Birth:</label>
+                  <input type="date" id="dob" name="dob" required>
+
+                  <div class="wrap">
+                        <button type="submit">Submit</button>
+                  </div>
+            </form>
+      </div>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge Giver</title>
+    <link href="https://fonts.googleapis.com/css2?family=AR+ESSENCE&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: darkcyan; /* Updated background color */
+            color: #fff; /* Updated text color for contrast */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column; /* Align children vertically */
+        }
+
+        .container {
+            background-color: skyblue;
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'AR ESSENCE', sans-serif; /* Changed font family */
+            margin-bottom: 20px;
+            color: black;
+            font-size: 45px;
+        }
+
+        #challenge {
+            font-family: 'AR ESSENCE', sans-serif; /* Changed font family */
+            font-size: 32px;
+            margin: 20px;
+            padding: 10px;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+            background-color: #fff;
+            color: black; /* Text color for challenge box */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            font-family: 'AR ESSENCE', sans-serif; /* Changed font family */
+            padding: 10px 20px;
+            font-size: 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            color: white;
+            text-decoration: none; /* Remove underline from link */
+        }
+
+        h4 {
+            text-align: center;
+            font-size: 40px;
+            font-family: Agency FB; 
+            margin-top: 20px; /* Add some space above */
+        }
+        p{
+    color: white;
+    font-family:AR ESSENCE;
+    font-size: 30px;
+    text-align:center;
+}
+    </style>
+</head>
+<body>
+    <p>Get your Daily challenges here.<br> Click the button and get a challenge for yo to complete!!</p>
+    <div class="container">
+        <h1>Random Challenge Generator</h1>
+        <div id="challenge">Press the button to get a challenge!</div>
+        <button onclick="generateChallenge()">Get Challenge</button>
+    </div>
+    <h4><a href="Home.html">Click me to go back home!</a></h4>
+
+    <script>
+        const challenges = [
+            "Run for 10 minutes.",
+            "Read a chapter of a book.",
+            "Try a new recipe.",
+            "Do 20 push-ups.",
+            "Write a journal entry.",
+            "Take a 30-minute walk.",
+            "Meditate for 10 minutes.",
+            "Call a friend you haven't spoken to in a while.",
+            "Learn a new word and use it in a sentence.",
+            "Watch a documentary on a topic you're interested in.",
+            "Draw a picture of something that makes you happy.",
+            "Organize your workspace.",
+            "Try a new form of exercise.",
+            "Cook a meal using only ingredients you have at home.",
+            "Listen to a podcast on a topic you know nothing about.",
+            "Spend 10 minutes stretching.",
+            "Write a letter to your future self.",
+            "Take a cold shower.",
+            "Plant a seed or a flower.",
+            "Practice a musical instrument for 20 minutes.",
+            "Make a list of things you are grateful for.",
+            "Try a new hobby or craft.",
+            "Watch the sunrise or sunset.",
+            "Do a random act of kindness.",
+            "Spend time in nature.",
+            "Learn how to juggle.",
+            "Do a puzzle.",
+            "Create a vision board.",
+            "Write a short story.",
+            "Try a new type of cuisine.",
+            "Take a day off from social media.",
+            "Host a virtual game night with friends.",
+            "Explore a new area of your city.",
+            "Go to a local museum or gallery.",
+            "Write a poem about your day.",
+            "Take a yoga class online.",
+            "Make a smoothie with ingredients you’ve never tried.",
+            "Learn how to make a paper airplane.",
+            "Spend an hour reading about a different culture.",
+            "Create a list of 10 goals for the next year.",
+            "Do 50 jumping jacks.",
+            "Try meditation for the first time.",
+            "Create a playlist of your favorite songs.",
+            "Write down 5 things you love about yourself.",
+            "Spend an hour volunteering online.",
+            "Make a scrapbook of your favorite memories.",
+            "Try to go a day without complaining.",
+            "Research a historical figure you admire.",
+            "Write a letter to someone who inspires you.",
+            "Try a new exercise routine.",
+            "Make a daily schedule for the week.",
+            "Try to cook a dish from a different country.",
+            "Learn a few phrases in a new language.",
+            "Watch a classic movie you’ve never seen.",
+            "Spend 30 minutes doing something creative.",
+            "Go for a bike ride.",
+            "Make a list of your top 5 favorite books.",
+            "Try a digital detox for a day.",
+            "Write down your dreams and goals.",
+            "Take a different route on your walk or drive.",
+            "Try a new style of cooking, like grilling or baking.",
+            "Create a personal mantra for yourself.",
+            "Learn about a new scientific discovery.",
+            "Spend time decluttering a space in your home."
+        ];
+
+        function generateChallenge() {
+            const randomIndex = Math.floor(Math.random() * challenges.length);
+            const challengeText = challenges[randomIndex];
+            document.getElementById('challenge').innerText = challengeText;
+        }
+    </script>
+</body>
+</html>
